@@ -1,6 +1,6 @@
 <template>
-	<div class="song-table-container">
-		<div class="title">
+	<div class="song-table-container" v-if="songsInfo.length > 0">
+		<div class="title" >
 			<h3 class="title-text">歌曲列表</h3>
 			<span class="song-count">{{ 100 }}首歌</span>
 			<p class="play">
@@ -23,7 +23,7 @@
 					<tr
 						class="table-item"
 						v-for="(item, index) in songsInfo"
-						:key="item.id"
+						:key="index"
 						:class="{ bg: index % 2 === 0 }"
 					>
 						<td class="table-index">{{ index + 1 }}</td>
@@ -52,8 +52,8 @@
 						<td class="table-body-singer">
 							<router-link
 								class="singer"
-								v-for="singer in item.singer"
-								:key="singer.id"
+								v-for="(singer,index1) in item.singer"
+								:key="index1"
 								:to="'/artist?id=' + singer.id"
 							>
 								{{ singer.name }}
@@ -95,14 +95,6 @@ export default {
 		},
 	},
 	methods: {
-		// 处理多个歌手
-		handleSingers(item) {
-			let str = item.ar[0].name;
-			for (let i = 1; i < item.ar.length; i++) {
-				str += "&" + item.ar[i].name;
-			}
-			return str;
-		},
 	},
 };
 </script>
